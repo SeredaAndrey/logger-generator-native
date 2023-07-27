@@ -1,12 +1,13 @@
 import { View, Text } from "react-native";
 import { useEffect } from "react";
 
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 
 import { ReportScreenStile } from "./reportScreenStyled";
 import { TouchableOpacity } from "react-native";
 
 const ReportListItem = ({ item, navigation }) => {
+  // console.log("item: ", item);
   const formatedDate = (dateString) => {
     const date = new Date(dateString);
     const formattedDate = date.toLocaleDateString("en-US", {
@@ -29,11 +30,11 @@ const ReportListItem = ({ item, navigation }) => {
       .padStart(2, "0")}`;
   };
 
-  console.log("navigation: ", navigation);
+  // console.log("navigation: ", navigation);
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("patchCycle", item._id)}
+      onPress={() => navigation.navigate("patchCycle", { item: item })}
       style={ReportScreenStile.itemContainer}
     >
       <View style={ReportScreenStile.semiItemContainer}>
@@ -70,7 +71,7 @@ const ReportListItem = ({ item, navigation }) => {
         <MaterialCommunityIcons name="oil" size={24} color="black" />
         <Text style={ReportScreenStile.text}>
           {item.changeOil ? (
-            <FontAwesome name="check" size={24} color="black" />
+            <AntDesign name="check" size={24} color="black" />
           ) : (
             "---"
           )}

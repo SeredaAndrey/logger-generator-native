@@ -42,6 +42,7 @@ export const deleteWorkingCycleUnit = createAsyncThunk(
 export const fetchSingleWorkingCycle = createAsyncThunk(
   "cycle/fetchOne",
   async (id, { rejectWithValue }) => {
+    // console.log("fetching data");
     try {
       const { data } = await axios.get(`api/cycles/${id}`);
       return data;

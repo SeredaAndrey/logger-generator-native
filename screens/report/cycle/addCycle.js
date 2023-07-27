@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
@@ -21,8 +21,7 @@ const AddCycle = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cycle.timestampStart, cycle.timestampStop]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     const data = await dispatch(addWorkingCycle(cycle));
     setCycle({});
     data && navigation("report");

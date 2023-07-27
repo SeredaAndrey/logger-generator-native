@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { TextInput } from "react-native";
-import { Text, View } from "react-native";
+import { TextInput, TouchableOpacity, Text, View } from "react-native";
 import Toast from "react-native-toast-message";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import CheckBox from "react-native-check-box";
 
 const CycleForm = ({
   handleSubmit,
-  handleChange,
+  onChangeGenerations,
   onChangeStartTimeStamp,
   onChangeStopTimeStamp,
+  onCheckedOil,
+  onChangeRefueling,
   cycle,
   isNewCycle,
 }) => {
+  const [isVisibleDatePickerStart, setIsVisibleDatePickerStart] =
+    useState(false);
+  const [isVisibleDatePickerStop, setIsVisibleDatePickerStop] = useState(false);
   const [workingTime, setWorkingTime] = useState(null);
-
-  console.log("cycle: ", cycle);
 
   useEffect(() => {
     if (!cycle.timestampStart || !cycle.timestampStop) {
@@ -23,33 +27,14 @@ const CycleForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cycle]);
 
-  const calculateWorkingTime = () => {
-    if (!cycle.timestampStart || !cycle.timestampStop) {
-      return;
-    } else {
-      const startDateTime = new Date(cycle.timestampStart);
-      const stopDateTime = new Date(cycle.timestampStop);
+  const formatedDate = (date) => {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
 
-      const timeDiff = stopDateTime.getTime() - startDateTime.getTime();
-
-      const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-
-      if (hours < 0 || minutes < 0) {
-        setWorkingTime(null);
-        Toast.show({
-          type: "error",
-          text1: "stop time is less than start time",
-        });
-        return;
-      } else {
-        const formattedTimeDiff = `${hours
-          .toString()
-          .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
-        setWorkingTime(formattedTimeDiff);
-        return;
-      }
-    }
+    return `${day}.${month}.${year} ${hours}:${minutes}`;
   };
 
   return (
@@ -61,12 +46,59 @@ const CycleForm = ({
           <FormattedMessage id="patch_cycle" />
         )}
       </Text>
+      <Text>
+        <FormattedMessage id="start" />
+      </Text>
+      <TouchableOpacity
+        onPress={() => {
+          setIsVisibleDatePickerStart(true);
+        }}
+      >
+        <Text>{formatedDate(cycle.timestampStart)}</Text>
+      </TouchableOpacity>
+      <Text>
+        <FormattedMessage id="stop" />
+      </Text>
+      <TouchableOpacity
+        onPress={() => {
+          setIsVisibleDatePickerStop(true);
+        }}
+      >
+        <Text>{formatedDate(cycle.timestampStop)}</Text>
+      </TouchableOpacity>
+      <Text>
+        <FormattedMessage id="generated" />
+      </Text>
       <TextInput
         placeholder="example: 5"
         placeholderTextColor={"#BDBDBD"}
         value={cycle.volumeElecricalGeneration}
-        onChange={handleChange}
+        name="volumeElecricalGeneration"
+        onChangeText={onChangeGenerations}
       />
+      <Text>
+        <FormattedMessage id="refueling" />
+      </Text>
+      <TextInput
+        placeholder="example: 5"
+        placeholderTextColor={"#BDBDBD"}
+        name="refueling"
+        value={cycle.refueling}
+        onChangeText={onChangeRefueling}
+      />
+      <Text>
+        <FormattedMessage id="reoiling" />
+      </Text>
+      <CheckBox isChecked={cycle.changeOil} onClick={onCheckedOil} />
+      <TouchableOpacity onPress={handleSubmit}>
+        <Text>
+          {isNewCycle ? (
+            <FormattedMessage id="create" />
+          ) : (
+            <FormattedMessage id="patch" />
+          )}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
