@@ -8,7 +8,7 @@ import { CalcDataStyles } from "./calculateDateStyled";
 import { fetchCalcData } from "../../redux/cycle/cycleOperations";
 import { FormattedMessage } from "react-intl";
 
-const calcData = () => {
+const CalcData = () => {
   const [calcData, setCalcData] = useState(null);
   const dispatch = useDispatch();
 
@@ -35,6 +35,8 @@ const calcData = () => {
       .toString()
       .padStart(2, "0")}`;
   };
+
+  // console.log("navigation: ", navigation);
 
   return (
     <View style={CalcDataStyles.container}>
@@ -124,4 +126,4 @@ const calcData = () => {
   );
 };
 
-export default calcData;
+export default CalcData;

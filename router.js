@@ -2,10 +2,12 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  AntDesign,
+  FontAwesome5,
+  MaterialIcons,
+} from "@expo/vector-icons";
 
 const AuthStack = createBottomTabNavigator();
 const MainTab = createBottomTabNavigator();
@@ -13,8 +15,9 @@ const MainTab = createBottomTabNavigator();
 import LogInScreen from "./screens/auth/LoginScreen";
 import RegisterScreen from "./screens/auth/RegisterScreen";
 import VerifyScreen from "./screens/auth/VerifyScreen";
-import calcData from "./screens/calculateData/calculateData";
+import CalcData from "./screens/calculateData/calculateData";
 import ReportScreen from "./screens/report/reportScreen";
+import AddCycle from "./screens/report/cycle/addCycle";
 
 export function useRoute(isAuth) {
   if (!isAuth) {
@@ -68,8 +71,8 @@ export function useRoute(isAuth) {
               );
             },
           }}
-          name="calcData"
-          component={calcData}
+          name="CalcData"
+          component={CalcData}
         />
         <AuthStack.Screen
           options={{
@@ -80,6 +83,16 @@ export function useRoute(isAuth) {
           }}
           name="report"
           component={ReportScreen}
+        />
+        <AuthStack.Screen
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ focused, size, color }) => {
+              return <MaterialIcons name="post-add" size={32} color="black" />;
+            },
+          }}
+          name="newCycle"
+          component={AddCycle}
         />
       </MainTab.Navigator>
     );

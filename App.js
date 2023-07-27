@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useRoute } from "./router";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import Spinner from "react-native-loading-spinner-overlay";
+import Toast from "react-native-toast-message";
 
 import { AppStyles } from "./AppSttyled";
 
@@ -98,6 +99,7 @@ function App() {
           </View>
         </NavigationContainer>
       </IntlProvider>
+      <Toast />
     </PersistGate>
   );
 }
