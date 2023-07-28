@@ -5,6 +5,8 @@ import Toast from "react-native-toast-message";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import CheckBox from "react-native-check-box";
 
+import { CyclesScreensStile } from "./cycleScreensStyled";
+
 const CycleForm = ({
   handleSubmit,
   onChangeGenerations,
@@ -38,55 +40,59 @@ const CycleForm = ({
   };
 
   return (
-    <View>
-      <Text>
+    <View style={CyclesScreensStile.formContainer}>
+      <Text style={CyclesScreensStile.formTitle}>
         {isNewCycle ? (
           <FormattedMessage id="create_cycle" />
         ) : (
           <FormattedMessage id="patch_cycle" />
         )}
       </Text>
-      <Text>
+      <Text style={CyclesScreensStile.formTitleData}>
         <FormattedMessage id="start" />
       </Text>
       <TouchableOpacity
+        style={CyclesScreensStile.formDataInputBox}
         onPress={() => {
           setIsVisibleDatePickerStart(true);
         }}
       >
         <Text>{formatedDate(cycle.timestampStart)}</Text>
       </TouchableOpacity>
-      <Text>
+      <Text style={CyclesScreensStile.formTitleData}>
         <FormattedMessage id="stop" />
       </Text>
       <TouchableOpacity
+        style={CyclesScreensStile.formDataInputBox}
         onPress={() => {
           setIsVisibleDatePickerStop(true);
         }}
       >
         <Text>{formatedDate(cycle.timestampStop)}</Text>
       </TouchableOpacity>
-      <Text>
+      <Text style={CyclesScreensStile.formTitleData}>
         <FormattedMessage id="generated" />
       </Text>
       <TextInput
+        style={CyclesScreensStile.formDataInputBox}
         placeholder="example: 5"
         placeholderTextColor={"#BDBDBD"}
         value={cycle.volumeElecricalGeneration}
         name="volumeElecricalGeneration"
         onChangeText={onChangeGenerations}
       />
-      <Text>
+      <Text style={CyclesScreensStile.formTitleData}>
         <FormattedMessage id="refueling" />
       </Text>
       <TextInput
+        style={CyclesScreensStile.formDataInputBox}
         placeholder="example: 5"
         placeholderTextColor={"#BDBDBD"}
         name="refueling"
         value={cycle.refueling}
         onChangeText={onChangeRefueling}
       />
-      <Text>
+      <Text style={CyclesScreensStile.formTitleData}>
         <FormattedMessage id="reoiling" />
       </Text>
       <CheckBox isChecked={cycle.changeOil} onClick={onCheckedOil} />
