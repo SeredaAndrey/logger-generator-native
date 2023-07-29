@@ -10,8 +10,6 @@ import { FormattedMessage } from "react-intl";
 const NestedScreen = createNativeStackNavigator();
 
 const ReportScreen = ({ navigation }) => {
-  //   console.log("navigation: ", navigation);
-
   return (
     <NestedScreen.Navigator>
       <NestedScreen.Screen

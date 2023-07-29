@@ -1,22 +1,9 @@
-const getIsLoggedIn = (state) => state.auth.isLoggedIn;
+export const getAuthIsLoggedIn = (state) => state.auth.auth.isLoggedIn;
+export const getAuthIsLoading = (state) => state.auth.auth.isLoading;
 
-const getIsLoading = (state) => state.auth.isLoading;
+export const getAuthUsername = (state) => state.auth.auth.name;
+export const getAuthUserAvatar = (state) => state.auth.auth.avatar;
+export const getAuthUserToken = (state) => state.auth.auth.token;
+export const getAuthUserLanguage = (state) => state.auth.auth.inerfaceLanguage;
 
-const getUsername = (state) => state.auth.name;
-const getUserAvatar = (state) => state.auth.avatar;
-const getUserToken = (state) => state.auth.token;
-const getUserLanguage = (state) => state.auth.inerfaceLanguage;
-
-const getIsRefreshing = (state) => state.auth.isRefreshing;
-
-const authSelector = {
-  getIsLoggedIn,
-  getIsLoading,
-  getUsername,
-  getUserAvatar,
-  getUserToken,
-  getUserLanguage,
-  getIsRefreshing,
-};
-
-export default authSelector;
+export const getAuthIsRefreshing = (state) => state.auth.auth.isRefreshing;

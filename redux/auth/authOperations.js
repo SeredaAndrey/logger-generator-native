@@ -1,4 +1,5 @@
 import axios from "axios";
+import Toast from "react-native-toast-message";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -21,6 +22,10 @@ export const register = createAsyncThunk(
       token.unset();
       return data;
     } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "email is already exist",
+      });
       return rejectWithValue(error.message);
     }
   }
@@ -33,6 +38,10 @@ export const verification = createAsyncThunk(
       const { data } = await axios.post("api/auth/verify", credential);
       return data;
     } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "token incorrect",
+      });
       return rejectWithValue(error.message);
     }
   }
@@ -45,7 +54,11 @@ export const logIn = createAsyncThunk("auth/login", async (credential) => {
     token.set(data.token);
     return data;
   } catch (error) {
-    console.log("error.message", error.message);
+    Toast.show({
+      type: "error",
+      text1: "email or password is wrong",
+    });
+    return thunkAPI.rejectWithValue();
   }
 });
 
@@ -54,7 +67,7 @@ export const logOut = createAsyncThunk("auth/logout", async () => {
     await axios.get("api/auth/logout");
     token.unset();
   } catch (error) {
-    return error.message;
+    return thunkAPI.rejectWithValue();
   }
 });
 
@@ -62,7 +75,7 @@ export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
     const persistedToken = thunkAPI.getState().auth.token;
-    if (persistedToken === null) {
+    if (persistedToken === null || !persistedToken) {
       return thunkAPI.rejectWithValue();
     }
     token.set(persistedToken);
@@ -70,7 +83,7 @@ export const refreshUser = createAsyncThunk(
       const { data } = await axios.get("api/owner");
       return data;
     } catch (error) {
-      return error.message;
+      return thunkAPI.rejectWithValue();
     }
   }
 );

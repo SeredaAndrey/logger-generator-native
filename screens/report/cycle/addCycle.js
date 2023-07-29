@@ -6,8 +6,18 @@ import AppBar from "../../appBar/appBar";
 import { addWorkingCycle } from "../../../redux/cycle/cycleOperations";
 import CycleForm from "./cycleForm";
 
-const AddCycle = () => {
-  const [cycle, setCycle] = useState([]);
+const initialState = {
+  changeOil: false,
+  refueling: 0,
+  volumeElecricalGeneration: 0,
+  timestampStart: new Date(),
+  timestampStop: new Date(),
+};
+
+const AddCycle = (props) => {
+  console.log("props: ", props);
+
+  const [cycle, setCycle] = useState(initialState);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,41 +33,37 @@ const AddCycle = () => {
 
   const handleSubmit = async () => {
     const data = await dispatch(addWorkingCycle(cycle));
-    setCycle({});
-    data && navigation("report");
+    setCycle(initialState);
+    data && props.navigation.navigate("reportScreen");
   };
 
-  const handleChange = ({ target: { name, value, checked } }) => {
-    switch (name) {
-      case "volumeElecricalGeneration":
-        return setCycle({ ...cycle, volumeElecricalGeneration: value });
-      case "refueling":
-        return setCycle({ ...cycle, refueling: value });
-      case "changeOil":
-        return setCycle({ ...cycle, changeOil: checked });
-      default:
-        return;
-    }
+  const onChangeGenerations = (value) => {
+    setCycle({ ...cycle, volumeElecricalGeneration: value });
   };
-
+  const onChangeRefueling = (value) => {
+    setCycle({ ...cycle, refueling: value });
+  };
   const onChangeStartTimeStamp = (date) => {
     setCycle({ ...cycle, timestampStart: date });
   };
   const onChangeStopTimeStamp = (date) => {
     setCycle({ ...cycle, timestampStop: date });
   };
-
-  console.log("cycle: ", cycle);
+  const onCheckedOil = () => {
+    setCycle({ ...cycle, changeOil: !cycle.changeOil });
+  };
 
   return (
     <View>
       <AppBar />
       <CycleForm
         cycle={cycle}
-        handleChange={handleChange}
+        onChangeGenerations={onChangeGenerations}
         handleSubmit={handleSubmit}
         onChangeStartTimeStamp={onChangeStartTimeStamp}
         onChangeStopTimeStamp={onChangeStopTimeStamp}
+        onCheckedOil={onCheckedOil}
+        onChangeRefueling={onChangeRefueling}
         isNewCycle={true}
       />
     </View>

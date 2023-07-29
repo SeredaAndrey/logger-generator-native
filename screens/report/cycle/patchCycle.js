@@ -1,13 +1,15 @@
 import { View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 
 import CycleForm from "./cycleForm";
-import { patchWorkingCycleUnit } from "../../../redux/cycle/cycleOperations";
+import {
+  deleteWorkingCycleUnit,
+  patchWorkingCycleUnit,
+} from "../../../redux/cycle/cycleOperations";
 
 const PatchCycle = (props) => {
-  console.log("props: ", props);
   const dispatch = useDispatch();
   const [cycle, setCycle] = useState({
     changeOil: props.route.params.item.changeOil,
@@ -18,34 +20,46 @@ const PatchCycle = (props) => {
     timestampStop: new Date(props.route.params.item.timestampStop),
   });
 
+  useEffect(() => {
+    const startDateTime = new Date(cycle.timestampStart);
+    const stopDateTime = new Date(cycle.timestampStop);
+
+    setCycle({
+      ...cycle,
+      workingTimeOfCycle: stopDateTime.getTime() - startDateTime.getTime(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cycle.timestampStart, cycle.timestampStop]);
+
   const handleSubmit = async () => {
     const data = await dispatch(
       patchWorkingCycleUnit({ cycle, id: props.route.params.item._id })
     );
-    // console.log("navigation: ", navigation);
-    // setCycle({});
-    // !data
-    //   ? props.navigate("reportScreen")
-    //   : Toast.show({ type: "error", text1: "something is Wrong" });
+    if (data) {
+      props.navigation.navigate("reportScreen");
+    } else {
+      Toast.show({ type: "error", text1: "something is Wrong" });
+    }
   };
 
   const onChangeGenerations = (value) => {
     setCycle({ ...cycle, volumeElecricalGeneration: value });
   };
-
   const onChangeRefueling = (value) => {
     setCycle({ ...cycle, refueling: value });
   };
-
   const onChangeStartTimeStamp = (date) => {
     setCycle({ ...cycle, timestampStart: date });
   };
   const onChangeStopTimeStamp = (date) => {
     setCycle({ ...cycle, timestampStop: date });
   };
-
   const onCheckedOil = () => {
     setCycle({ ...cycle, changeOil: !cycle.changeOil });
+  };
+  const deleteCycle = async () => {
+    await dispatch(deleteWorkingCycleUnit(props.route.params.item._id));
+    props.navigation.navigate("reportScreen");
   };
 
   return (
@@ -59,6 +73,7 @@ const PatchCycle = (props) => {
         onCheckedOil={onCheckedOil}
         onChangeRefueling={onChangeRefueling}
         isNewCycle={false}
+        deleteCycle={deleteCycle}
       />
     </View>
   );

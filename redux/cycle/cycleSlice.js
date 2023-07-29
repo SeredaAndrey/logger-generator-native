@@ -6,10 +6,11 @@ const {
   fetchSingleWorkingCycle,
   fetchWorkingCycles,
   fetchCalcData,
-} = require("./cycleOperation");
+} = require("./cycleOperations");
 
 const initialState = {
   isLoading: false,
+  isRefreshing: false,
 };
 
 const cycleSlice = createSlice({
@@ -20,6 +21,7 @@ const cycleSlice = createSlice({
       //create new cycle
       .addCase(addWorkingCycle.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isRefreshing = false;
       })
       .addCase(addWorkingCycle.pending, (state, action) => {
         state.isLoading = true;
@@ -30,6 +32,7 @@ const cycleSlice = createSlice({
       //patch cycle
       .addCase(patchWorkingCycleUnit.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isRefreshing = false;
       })
       .addCase(patchWorkingCycleUnit.pending, (state, action) => {
         state.isLoading = true;
@@ -40,6 +43,7 @@ const cycleSlice = createSlice({
       //delete cycle
       .addCase(deleteWorkingCycleUnit.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isRefreshing = false;
       })
       .addCase(deleteWorkingCycleUnit.pending, (state, action) => {
         state.isLoading = true;
@@ -60,6 +64,7 @@ const cycleSlice = createSlice({
       //fetch cycles
       .addCase(fetchWorkingCycles.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isRefreshing = true;
       })
       .addCase(fetchWorkingCycles.pending, (state, action) => {
         state.isLoading = true;

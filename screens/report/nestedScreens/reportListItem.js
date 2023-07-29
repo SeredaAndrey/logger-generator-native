@@ -34,7 +34,11 @@ const ReportListItem = ({ item, navigation }) => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("patchCycle", { item: item })}
+      onPress={() => {
+        navigation.navigate("patchCycle", {
+          item: item,
+        });
+      }}
       style={ReportScreenStile.itemContainer}
     >
       <View style={ReportScreenStile.semiItemContainer}>

@@ -22,6 +22,7 @@ export const ReportScreenStile = StyleSheet.create({
   totalContainer: {
     marginTop: 5,
     backgroundColor: "rgb(217, 217, 217)",
+    marginBottom: 200,
     borderRadius: 10,
   },
   totalSemiContainer: {
@@ -47,5 +48,35 @@ export const ReportScreenStile = StyleSheet.create({
     flexDirection: "column",
     width: 180,
     justifyContent: "center",
+  },
+  filterContainer: {
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingHorizontal: 5,
+    flexDirection: "column",
+    backgroundColor: "rgb(217, 217, 217)",
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+  },
+  filterSemiContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  filterTitleText: {
+    marginRight: 3,
+    color: "black",
+    fontSize: 11,
+    textTransform: "lowercase",
+    fontFamily: "JuraReg",
+  },
+  filterText: {
+    color: "blue",
+    fontSize: 14,
+    fontWeight: "500",
+    textTransform: "uppercase",
+    fontFamily: "JuraReg",
   },
 });

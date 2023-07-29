@@ -5,20 +5,25 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import AppBar from "../../appBar/appBar";
 
 import { fetchWorkingCycles } from "../../../redux/cycle/cycleOperations";
-import { FormattedMessage } from "react-intl";
 import ReportListItem from "./reportListItem";
 import ReportTotalData from "./reportTotalData";
+import { getCycleRefreshing } from "../../../redux/cycle/cycleSelector";
+import { ReportScreenStile } from "./reportScreenStyled";
+import { ScrollView } from "react-native";
 
 const Report = ({ navigation }) => {
-  const [openStart, setOpenStart] = useState(false);
-  const [openStop, setOpenStop] = useState(false);
+  const refreshing = useSelector(getCycleRefreshing);
+  const [isVisibleDatePickerStart, setIsVisibleDatePickerStart] =
+    useState(false);
+  const [isVisibleDatePickerStop, setIsVisibleDatePickerStop] = useState(false);
   const [cycles, setCycles] = useState();
   const [filtering, setFiltering] = useState(() => {
     const currentDate = new Date();
@@ -35,7 +40,7 @@ const Report = ({ navigation }) => {
 
     return {
       dateStart: firstDayOfMonth,
-      dateStop: lastDayOfMonth,
+      dateStop: lastDayOfMonth.setHours(23, 59, 0, 0),
     };
   });
   const [sorting, setSorting] = useState({
@@ -55,7 +60,7 @@ const Report = ({ navigation }) => {
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filtering, sorting, dispatch]);
+  }, [filtering, sorting, refreshing, dispatch]);
 
   const formatedDate = (dateString) => {
     const date = new Date(dateString);
@@ -72,37 +77,73 @@ const Report = ({ navigation }) => {
     return `${formattedDate} ${formattedTime}`;
   };
 
+  console.log("refreshing: ", refreshing);
+
+  const onChangeFilteringByStart = (date) => {
+    setFiltering((prevFilter) => ({
+      ...prevFilter,
+      dateStart: date,
+    }));
+    setIsVisibleDatePickerStart(false);
+  };
+  const onChangeFilteringByStop = (date) => {
+    setFiltering((prevFilter) => ({
+      ...prevFilter,
+      dateStop: date,
+    }));
+    setIsVisibleDatePickerStop(false);
+  };
+
+  console.log("filtering: ", filtering);
+  console.log("isVisibleDatePickerStart: ", isVisibleDatePickerStart);
+  console.log("isVisibleDatePickerStop: ", isVisibleDatePickerStop);
+
   return (
     <View>
       <AppBar />
-      <View>
-        <Text>
-          <FormattedMessage id="show_from" />
-        </Text>
-        <TouchableOpacity onPress={() => setOpenStart(true)}>
-          <Text>{formatedDate(filtering.dateStart)}</Text>
-        </TouchableOpacity>
-        <DateTimePickerModal
-          inVisible={openStart}
-          mode="datetime"
-          onConfirm={(date) => {
-            setFiltering((prevFilter) => ({
-              ...prevFilter,
-              dateStart: date,
-            }));
-            setOpenStart(false);
-          }}
-          onCancel={() => setOpenStart(false)}
-        />
-
-        <Text>
-          <FormattedMessage id="show_to" />
-          <TouchableOpacity onPress={() => setOpenStop(true)}>
-            <Text>{formatedDate(filtering.dateStop)}</Text>
+      <View style={ReportScreenStile.filterContainer}>
+        <View style={ReportScreenStile.filterSemiContainer}>
+          <Text style={ReportScreenStile.filterTitleText}>
+            <FormattedMessage id="show_from" />
+          </Text>
+          <DateTimePickerModal
+            inVisible={isVisibleDatePickerStart}
+            mode="datetime"
+            onConfirm={(date) => onChangeFilteringByStart(date)}
+            onCancel={() => setIsVisibleDatePickerStart(false)}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              setIsVisibleDatePickerStart(true);
+            }}
+          >
+            <Text style={ReportScreenStile.filterText}>
+              {formatedDate(filtering.dateStart)}
+            </Text>
           </TouchableOpacity>
-        </Text>
+        </View>
+        <View style={ReportScreenStile.filterSemiContainer}>
+          <Text style={ReportScreenStile.filterTitleText}>
+            <FormattedMessage id="show_to" />
+          </Text>
+          <DateTimePickerModal
+            inVisible={isVisibleDatePickerStop}
+            mode="datetime"
+            onConfirm={(date) => onChangeFilteringByStop(date)}
+            onCancel={() => setIsVisibleDatePickerStop(false)}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              setIsVisibleDatePickerStop(true);
+            }}
+          >
+            <Text style={ReportScreenStile.filterText}>
+              {formatedDate(filtering.dateStop)}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <SafeAreaView>
+      <ScrollView style={{ flexGrow: 1 }}>
         {cycles && (
           <FlatList
             data={cycles}
@@ -111,8 +152,8 @@ const Report = ({ navigation }) => {
             )}
           />
         )}
-      </SafeAreaView>
-      {cycles && <ReportTotalData cycles={cycles} />}
+        {cycles && <ReportTotalData cycles={cycles} />}
+      </ScrollView>
     </View>
   );
 };

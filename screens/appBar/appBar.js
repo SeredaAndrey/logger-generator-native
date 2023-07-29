@@ -2,10 +2,10 @@ import { Image, Text, View } from "react-native";
 
 import { AppBarStyles } from "./appBarStyled";
 import { useSelector } from "react-redux";
-import authSelector from "../../redux/auth/authSelector";
+import { getAuthUserAvatar } from "../../redux/auth/authSelector";
 
 const AppBar = () => {
-  const avatar = useSelector(authSelector.getUserAvatar);
+  const avatar = useSelector(getAuthUserAvatar);
   return (
     <View style={AppBarStyles.container}>
       <View style={AppBarStyles.logoContainer}>

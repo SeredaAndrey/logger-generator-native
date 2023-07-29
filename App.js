@@ -14,9 +14,15 @@ import { AppStyles } from "./AppSttyled";
 
 import { LOCALES } from "./i18n/locales";
 import { messages } from "./i18n/messages";
-import authSelector from "./redux/auth/authSelector";
 import { store, persistor } from "./redux/store";
 import { refreshUser } from "./redux/auth/authOperations";
+
+import {
+  getAuthIsLoading,
+  getAuthIsLoggedIn,
+  getAuthUserLanguage,
+} from "./redux/auth/authSelector";
+import { getCycleIsLoading } from "./redux/cycle/cycleSelector";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -30,10 +36,13 @@ export default function AppWrapper() {
 
 function App() {
   const [appIsReady, setAppIsReady] = useState(false);
-  const language = useSelector(authSelector.getUserLanguage);
+  const language = useSelector(getAuthUserLanguage);
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(authSelector.getIsLoggedIn);
-  const isAuthLoading = useSelector(authSelector.getIsLoading);
+  const isLoggedIn = useSelector(getAuthIsLoggedIn);
+  const isAuthLoading = useSelector(getAuthIsLoading);
+  const isCycleLoading = useSelector(getCycleIsLoading);
+
+  console.log("isLoggedIn: ", isLoggedIn);
 
   useEffect(() => {
     async function prepare() {
@@ -82,7 +91,7 @@ function App() {
   return (
     <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
       <Spinner
-        visible={isAuthLoading}
+        visible={isAuthLoading || isCycleLoading}
         textContent={"Loading..."}
         textStyle={AppStyles.spinnerTextStyle}
         overlayColor="rgba(0, 0, 0, 0.5)"
