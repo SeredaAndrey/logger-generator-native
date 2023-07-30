@@ -7,6 +7,7 @@ import {
   AntDesign,
   FontAwesome5,
   MaterialIcons,
+  Feather,
 } from "@expo/vector-icons";
 
 const AuthStack = createBottomTabNavigator();
@@ -18,6 +19,7 @@ import VerifyScreen from "./screens/auth/VerifyScreen";
 import CalcData from "./screens/calculateData/calculateData";
 import ReportScreen from "./screens/report/reportScreen";
 import AddCycle from "./screens/report/cycle/addCycle";
+import SettingsPage from "./screens/settings/settingScreen";
 
 export function useRoute(isAuth) {
   if (!isAuth) {
@@ -93,6 +95,16 @@ export function useRoute(isAuth) {
           }}
           name="newCycle"
           component={AddCycle}
+        />
+        <AuthStack.Screen
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ focused, size, color }) => {
+              return <Feather name="settings" size={24} color="black" />;
+            },
+          }}
+          name="settings"
+          component={SettingsPage}
         />
       </MainTab.Navigator>
     );

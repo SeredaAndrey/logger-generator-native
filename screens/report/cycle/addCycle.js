@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 import AppBar from "../../appBar/appBar";
 import { addWorkingCycle } from "../../../redux/cycle/cycleOperations";
@@ -15,8 +16,7 @@ const initialState = {
 };
 
 const AddCycle = (props) => {
-  console.log("props: ", props);
-
+  const navigation = useNavigation();
   const [cycle, setCycle] = useState(initialState);
   const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ const AddCycle = (props) => {
   const handleSubmit = async () => {
     const data = await dispatch(addWorkingCycle(cycle));
     setCycle(initialState);
-    data && props.navigation.navigate("reportScreen");
+    data && navigation.navigate("reportScreen");
   };
 
   const onChangeGenerations = (value) => {

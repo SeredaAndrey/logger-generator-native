@@ -17,9 +17,11 @@ export const AppBarStyles = StyleSheet.create({
     width: 50,
     height: 50,
   },
-  avatar: {
+  avatarContainer: {
     marginLeft: "auto",
     marginRight: 5,
+  },
+  avatar: {
     width: 50,
     borderRadius: 10,
     height: 50,

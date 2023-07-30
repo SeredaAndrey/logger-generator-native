@@ -9,20 +9,21 @@ import { FormattedMessage } from "react-intl";
 
 const NestedScreen = createNativeStackNavigator();
 
-const ReportScreen = ({ navigation }) => {
+const ReportScreen = () => {
   return (
     <NestedScreen.Navigator>
       <NestedScreen.Screen
         name="reportScreen"
         component={Report}
         options={{ headerShown: false }}
-        navigation={navigation}
       />
       <NestedScreen.Screen
         name="patchCycle"
         component={PatchCycle}
-        options={{ headerTitle: <FormattedMessage id="patch_cycle" /> }}
-        navigation={navigation}
+        options={{
+          headerTitle: <FormattedMessage id="patch_cycle" />,
+          headerTitleStyle: { fontFamily: "JuraReg" },
+        }}
       />
     </NestedScreen.Navigator>
   );

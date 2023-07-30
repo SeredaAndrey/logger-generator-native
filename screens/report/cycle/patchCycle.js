@@ -2,6 +2,7 @@ import { View } from "react-native";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 import CycleForm from "./cycleForm";
 import {
@@ -10,6 +11,7 @@ import {
 } from "../../../redux/cycle/cycleOperations";
 
 const PatchCycle = (props) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [cycle, setCycle] = useState({
     changeOil: props.route.params.item.changeOil,
@@ -36,7 +38,7 @@ const PatchCycle = (props) => {
       patchWorkingCycleUnit({ cycle, id: props.route.params.item._id })
     );
     if (data) {
-      props.navigation.navigate("reportScreen");
+      navigation.navigate("reportScreen");
     } else {
       Toast.show({ type: "error", text1: "something is Wrong" });
     }
@@ -59,7 +61,7 @@ const PatchCycle = (props) => {
   };
   const deleteCycle = async () => {
     await dispatch(deleteWorkingCycleUnit(props.route.params.item._id));
-    props.navigation.navigate("reportScreen");
+    navigation.navigate("reportScreen");
   };
 
   return (

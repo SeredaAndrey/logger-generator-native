@@ -1,10 +1,13 @@
 import { Image, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { AppBarStyles } from "./appBarStyled";
 import { useSelector } from "react-redux";
 import { getAuthUserAvatar } from "../../redux/auth/authSelector";
+import { TouchableOpacity } from "react-native";
 
 const AppBar = () => {
+  const navigation = useNavigation();
   const avatar = useSelector(getAuthUserAvatar);
   return (
     <View style={AppBarStyles.container}>
@@ -15,8 +18,12 @@ const AppBar = () => {
         />
         <Text style={AppBarStyles.title}>PowerGen Tracker</Text>
       </View>
-
-      <Image source={{ uri: avatar }} style={AppBarStyles.avatar} />
+      <TouchableOpacity
+        onPress={() => navigation.navigate("UserSettings")}
+        style={AppBarStyles.avatarContainer}
+      >
+        <Image source={{ uri: avatar }} style={AppBarStyles.avatar} />
+      </TouchableOpacity>
     </View>
   );
 };
