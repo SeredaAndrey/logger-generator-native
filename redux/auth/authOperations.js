@@ -87,3 +87,28 @@ export const refreshUser = createAsyncThunk(
     }
   }
 );
+
+export const updateUserData = createAsyncThunk(
+  "user/updateData",
+  async (
+    { firstName, secondName, email, inerfaceLanguage },
+    { rejectWithValue }
+  ) => {
+    const body = {
+      firstName,
+      seccondName: secondName,
+      email,
+      inerfaceLanguage,
+    };
+    try {
+      const { data } = await axios.patch("api/owner/patchName", body);
+      return data;
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "error",
+      });
+      return rejectWithValue(error.message);
+    }
+  }
+);

@@ -10,6 +10,8 @@ import {
 
 import { fetchUserData } from "../../../redux/settings/settingsOperations";
 import { FormattedMessage } from "react-intl";
+import { updateUserData } from "../../../redux/auth/authOperations";
+import { Image } from "react-native";
 
 const UserSettingsScreen = () => {
   const [firstName, setFirstName] = useState("");
@@ -59,9 +61,29 @@ const UserSettingsScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [avatar]);
 
+  const handleSubmit = async (e) => {
+    try {
+      dispatch(
+        await updateUserData({
+          firstName,
+          secondName,
+          email,
+          inerfaceLanguage: selectedLangualge,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View>
-      <Text>User settings screen</Text>
+      <Text>
+        <FormattedMessage id="user_settings" />
+      </Text>
+
+      <Image source={{ uri: avatarUrl }} style={{ height: 200, width: 200 }} />
+
       <TextInput
         placeholder={firstName ? firstName : "input first name"}
         placeholderTextColor={"#BDBDBD"}
@@ -80,13 +102,19 @@ const UserSettingsScreen = () => {
         value={email}
         onChangeText={(value) => setEmail(value)}
       />
+      <Text>
+        <FormattedMessage id="change_mail_message" />
+      </Text>
+      <Text>
+        <FormattedMessage id="language" />
+      </Text>
       <RadioGroup
         radioButtons={radioButtonsLanguage}
         onPress={setSelectedLanguage}
         selectedId={selectedLangualge}
         layout="row"
       />
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleSubmit}>
         <Text>
           <FormattedMessage id="submit" />
         </Text>
