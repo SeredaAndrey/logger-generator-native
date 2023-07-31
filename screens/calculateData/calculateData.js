@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import Toast from "react-native-toast-message";
 
 import AppBar from "../appBar/appBar";
 
@@ -18,9 +19,8 @@ const CalcData = () => {
         const data = await dispatch(fetchCalcData());
 
         if (data.payload.calculationData) data && setCalcData(data.payload);
-        // console.log(data.payload);
       } catch (error) {
-        console.log(error);
+        Toast.show({ type: "error", text1: "something is Wrong" });
       }
     }
     fetchData();
@@ -35,8 +35,6 @@ const CalcData = () => {
       .toString()
       .padStart(2, "0")}`;
   };
-
-  // console.log("navigation: ", navigation);
 
   return (
     <View style={CalcDataStyles.container}>

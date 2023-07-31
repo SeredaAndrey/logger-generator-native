@@ -13,6 +13,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { authSlice } from "./auth/authSlice";
 import { cycleReducer } from "./cycle/cycleSlice";
+import { settingsReducer } from "./settings/settingsSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -27,7 +28,7 @@ const rootReducer = combineReducers({
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, rootReducer),
-    // settings: settingsReducer,
+    settings: settingsReducer,
     cycle: cycleReducer,
   },
 

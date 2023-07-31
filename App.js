@@ -42,8 +42,6 @@ function App() {
   const isAuthLoading = useSelector(getAuthIsLoading);
   const isCycleLoading = useSelector(getCycleIsLoading);
 
-  console.log("isLoggedIn: ", isLoggedIn);
-
   useEffect(() => {
     async function prepare() {
       try {

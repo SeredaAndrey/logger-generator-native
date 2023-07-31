@@ -1,5 +1,4 @@
 import { View, Text } from "react-native";
-import { useEffect } from "react";
 
 import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 
@@ -7,7 +6,6 @@ import { ReportScreenStile } from "./reportScreenStyled";
 import { TouchableOpacity } from "react-native";
 
 const ReportListItem = ({ item, navigation }) => {
-  // console.log("item: ", item);
   const formatedDate = (dateString) => {
     const date = new Date(dateString);
     const formattedDate = date.toLocaleDateString("en-US", {
@@ -29,8 +27,6 @@ const ReportListItem = ({ item, navigation }) => {
       .toString()
       .padStart(2, "0")}`;
   };
-
-  // console.log("navigation: ", navigation);
 
   return (
     <TouchableOpacity

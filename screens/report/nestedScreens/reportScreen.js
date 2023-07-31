@@ -1,13 +1,8 @@
-import {
-  FlatList,
-  SafeAreaView,
-  Text,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { FlatList, Text, View, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import Toast from "react-native-toast-message";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import AppBar from "../../appBar/appBar";
@@ -55,7 +50,7 @@ const Report = ({ navigation }) => {
         const data = await dispatch(fetchWorkingCycles({ filtering, sorting }));
         data && setCycles(data.payload.data.WorkingCycles);
       } catch (error) {
-        console.log(error);
+        Toast.show({ type: "error", text1: "something is Wrong" });
       }
     }
     fetchData();
@@ -77,8 +72,6 @@ const Report = ({ navigation }) => {
     return `${formattedDate} ${formattedTime}`;
   };
 
-  console.log("refreshing: ", refreshing);
-
   const onChangeFilteringByStart = (date) => {
     setFiltering((prevFilter) => ({
       ...prevFilter,
@@ -93,10 +86,6 @@ const Report = ({ navigation }) => {
     }));
     setIsVisibleDatePickerStop(false);
   };
-
-  console.log("filtering: ", filtering);
-  console.log("isVisibleDatePickerStart: ", isVisibleDatePickerStart);
-  console.log("isVisibleDatePickerStop: ", isVisibleDatePickerStop);
 
   return (
     <View>

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import Toast from "react-native-toast-message";
 
 import queryString from "query-string";
 
@@ -10,6 +11,10 @@ export const addWorkingCycle = createAsyncThunk(
       const { data } = await axios.post("api/cycles", credential);
       return data;
     } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "something is Wrong",
+      });
       return rejectWithValue(error.message);
     }
   }
@@ -22,6 +27,10 @@ export const patchWorkingCycleUnit = createAsyncThunk(
       const { data } = await axios.patch(`api/cycles/${id}`, cycle);
       return data;
     } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "something is Wrong",
+      });
       return rejectWithValue(error.message);
     }
   }
@@ -34,6 +43,10 @@ export const deleteWorkingCycleUnit = createAsyncThunk(
       const { data } = await axios.delete(`api/cycles/${id}`);
       return data;
     } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "something is Wrong",
+      });
       return rejectWithValue(error.message);
     }
   }
@@ -42,11 +55,14 @@ export const deleteWorkingCycleUnit = createAsyncThunk(
 export const fetchSingleWorkingCycle = createAsyncThunk(
   "cycle/fetchOne",
   async (id, { rejectWithValue }) => {
-    // console.log("fetching data");
     try {
       const { data } = await axios.get(`api/cycles/${id}`);
       return data;
     } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "something is Wrong",
+      });
       return rejectWithValue(error.message);
     }
   }
@@ -72,6 +88,10 @@ export const fetchWorkingCycles = createAsyncThunk(
       const { data } = await axios.get(`api/cycles/?${queryStringParams}`);
       return data;
     } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "something is Wrong",
+      });
       return rejectWithValue(error.message);
     }
   }
@@ -84,6 +104,10 @@ export const fetchCalcData = createAsyncThunk(
       const { data } = await axios.get("api/calcdata");
       return data;
     } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "something is Wrong",
+      });
       return rejectWithValue(error.message);
     }
   }
