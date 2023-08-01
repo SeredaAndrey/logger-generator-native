@@ -62,40 +62,43 @@ const UserSettingsScreen = () => {
   }, [avatar]);
 
   const handleSubmit = async (e) => {
-    try {
-      dispatch(
-        await updateUserData({
-          firstName,
-          secondName,
-          email,
-          inerfaceLanguage: selectedLangualge,
-        })
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(
+      await updateUserData({
+        firstName,
+        secondName,
+        email,
+        inerfaceLanguage: selectedLangualge,
+      })
+    );
   };
 
   return (
-    <View>
+    <View style={{ alignItems: "center" }}>
       <Text>
         <FormattedMessage id="user_settings" />
       </Text>
-
-      <Image source={{ uri: avatarUrl }} style={{ height: 200, width: 200 }} />
-
+      <Image source={{ uri: avatarUrl }} style={{ height: 256, width: 256 }} />
+      <Text>
+        <FormattedMessage id="name" />
+      </Text>
       <TextInput
         placeholder={firstName ? firstName : "input first name"}
         placeholderTextColor={"#BDBDBD"}
         value={firstName}
         onChangeText={(value) => setFirstName(value)}
       />
+      <Text>
+        <FormattedMessage id="surname" />
+      </Text>
       <TextInput
         placeholder={secondName ? secondName : "input second name"}
         placeholderTextColor={"#BDBDBD"}
         value={secondName}
         onChangeText={(value) => setSecondName(value)}
       />
+      <Text>
+        <FormattedMessage id="email" />
+      </Text>
       <TextInput
         placeholder={email ? email : "input email"}
         placeholderTextColor={"#BDBDBD"}
