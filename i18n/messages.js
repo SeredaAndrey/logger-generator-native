@@ -171,9 +171,9 @@ export const messages = {
     des_dev: "дизайн та розробка Середа Андрій",
 
     settings: "Налаштування",
-    user_settings: "Налашт. користувача",
-    global_settings: "Загальні налашт.",
-    gen_settings: "Налашт. генератора",
+    user_settings: "Налаштування користувача",
+    global_settings: "Загальні налаштування",
+    gen_settings: "Налаштування генератора",
 
     cycles: "Цикли",
     add_cycle: "Додати робочий цикл",
