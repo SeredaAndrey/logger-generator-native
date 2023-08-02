@@ -72,19 +72,20 @@ const Report = ({ navigation }) => {
     return `${formattedDate} ${formattedTime}`;
   };
 
-  const onChangeFilteringByStart = (date) => {
-    setFiltering((prevFilter) => ({
-      ...prevFilter,
+  const onConfirmDateStart = (date) => {
+    console.log("date: ", date);
+    setFiltering({
+      ...filtering,
       dateStart: date,
-    }));
-    setIsVisibleDatePickerStart(false);
+    });
   };
-  const onChangeFilteringByStop = (date) => {
-    setFiltering((prevFilter) => ({
-      ...prevFilter,
+
+  const onConfirmDateStop = (date) => {
+    console.log("date: ", date);
+    setFiltering({
+      ...filtering,
       dateStop: date,
-    }));
-    setIsVisibleDatePickerStop(false);
+    });
   };
 
   return (
@@ -97,8 +98,8 @@ const Report = ({ navigation }) => {
           </Text>
           <DateTimePickerModal
             inVisible={isVisibleDatePickerStart}
-            mode="datetime"
-            onConfirm={(date) => onChangeFilteringByStart(date)}
+            mode="date"
+            onConfirm={onConfirmDateStart}
             onCancel={() => setIsVisibleDatePickerStart(false)}
           />
           <TouchableOpacity
@@ -117,8 +118,8 @@ const Report = ({ navigation }) => {
           </Text>
           <DateTimePickerModal
             inVisible={isVisibleDatePickerStop}
-            mode="datetime"
-            onConfirm={(date) => onChangeFilteringByStop(date)}
+            mode="date"
+            onConfirm={onConfirmDateStop}
             onCancel={() => setIsVisibleDatePickerStop(false)}
           />
           <TouchableOpacity
