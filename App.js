@@ -23,6 +23,7 @@ import {
   getAuthUserLanguage,
 } from "./redux/auth/authSelector";
 import { getCycleIsLoading } from "./redux/cycle/cycleSelector";
+import { getSettingIsLoading } from "./redux/settings/settingsSelector";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,6 +42,7 @@ function App() {
   const isLoggedIn = useSelector(getAuthIsLoggedIn);
   const isAuthLoading = useSelector(getAuthIsLoading);
   const isCycleLoading = useSelector(getCycleIsLoading);
+  const isSettingsLoading = useSelector(getSettingIsLoading);
 
   useEffect(() => {
     async function prepare() {
@@ -89,7 +91,7 @@ function App() {
   return (
     <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
       <Spinner
-        visible={isAuthLoading || isCycleLoading}
+        visible={isAuthLoading || isCycleLoading || isSettingsLoading}
         textContent={"Loading..."}
         textStyle={AppStyles.spinnerTextStyle}
         overlayColor="rgba(0, 0, 0, 0.5)"

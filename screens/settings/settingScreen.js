@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import SettingsScreen from "./nestedScreens/settingsScreens";
 import GeneratorSettingsScreen from "./nestedScreens/generatorSettings";
 import UserSettingsScreen from "./nestedScreens/userSettingsScreen";
-import TotalSettingsScreen from "./nestedScreens/totalSettings";
+import TotalSettingsScreen from "./nestedScreens/totalSettingsScreens";
 
 const NestedScreen = createNativeStackNavigator();
 
