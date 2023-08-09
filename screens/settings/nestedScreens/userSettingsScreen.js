@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { Text, TextInput, View, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import RadioGroup from "react-native-radio-buttons-group";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   getAuthUserAvatar,
@@ -15,6 +16,7 @@ import { Image } from "react-native";
 import { SettingsScreenStile } from "./settingScreensStyled";
 
 const UserSettingsScreen = () => {
+  const navigation = useNavigation();
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [email, setEmail] = useState("");
@@ -92,9 +94,14 @@ const UserSettingsScreen = () => {
       <Text style={SettingsScreenStile.screenTitle}>
         <FormattedMessage id="user_settings" />
       </Text>
-      <View style={SettingsScreenStile.imageContainer}>
-        <Image source={{ uri: avatarUrl }} style={SettingsScreenStile.avatar} />
-      </View>
+      <TouchableOpacity onPress={() => navigation.navigate("GetPhoto")}>
+        <View style={SettingsScreenStile.imageContainer}>
+          <Image
+            source={{ uri: avatarUrl }}
+            style={SettingsScreenStile.avatar}
+          />
+        </View>
+      </TouchableOpacity>
       <Text style={SettingsScreenStile.inputFormTitle}>
         <FormattedMessage id="name" />
       </Text>

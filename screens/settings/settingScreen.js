@@ -8,6 +8,7 @@ import SettingsScreen from "./nestedScreens/settingsScreens";
 import GeneratorSettingsScreen from "./nestedScreens/generatorSettings";
 import UserSettingsScreen from "./nestedScreens/userSettingsScreen";
 import TotalSettingsScreen from "./nestedScreens/totalSettingsScreens";
+import GetPhoto from "./nestedScreens/getPhoto";
 
 const NestedScreen = createNativeStackNavigator();
 
@@ -36,6 +37,12 @@ const SettingsPage = ({ navigation }) => {
         name="TotalSettings"
         component={TotalSettingsScreen}
         options={{ headerTitle: <FormattedMessage id="patch_cycle" /> }}
+        navigation={navigation}
+      />
+      <NestedScreen.Screen
+        name="GetPhoto"
+        component={GetPhoto}
+        options={{ headerTitle: <FormattedMessage id="get_photo" /> }}
         navigation={navigation}
       />
     </NestedScreen.Navigator>

@@ -93,4 +93,28 @@ export const SettingsScreenStile = StyleSheet.create({
     textAlign: "center",
     fontFamily: "JuraReg",
   },
+
+  getPhotoContainer: {
+    flex: 1,
+  },
+  camera: {
+    marginHorizontal: 20,
+    height: 500,
+    justifyContent: "center",
+  },
+  cameraButtonContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  takePhotoContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 150,
+    height: 100,
+  },
 });
