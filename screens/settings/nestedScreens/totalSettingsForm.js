@@ -27,7 +27,11 @@ const TotalSettingsForm = () => {
   );
   const idGeneral = useSelector(getGeneralSettingId);
 
-  const [generalSettings, setGeneralSettings] = useState({});
+  const [generalSettings, setGeneralSettings] = useState({
+    priceOfOil: null,
+    priceOfGasoline: null,
+    priceOfElectrical: null,
+  });
 
   useEffect(() => {
     setGeneralSettings({
@@ -47,6 +51,8 @@ const TotalSettingsForm = () => {
     <View>
       <Text style={SettingsScreenStile.screenTitle}>
         <FormattedMessage id="global_settings" />
+        {/* {generalSettings.priceOfOil} {generalSettings.priceOfElectrical}{" "}
+        {generalSettings.priceOfGasoline} */}
       </Text>
 
       <Text style={SettingsScreenStile.inputFormTitle}>
