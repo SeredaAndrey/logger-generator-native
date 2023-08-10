@@ -3,6 +3,7 @@ import { Text, TextInput, View, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import RadioGroup from "react-native-radio-buttons-group";
 import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 
 import {
   getAuthUserAvatar,
@@ -11,7 +12,7 @@ import {
 
 import { fetchUserData } from "../../../redux/settings/settingsOperations";
 import { FormattedMessage } from "react-intl";
-import { updateUserData } from "../../../redux/auth/authOperations";
+import { logOut, updateUserData } from "../../../redux/auth/authOperations";
 import { Image } from "react-native";
 import { SettingsScreenStile } from "./settingScreensStyled";
 
@@ -89,6 +90,10 @@ const UserSettingsScreen = () => {
     );
   };
 
+  const handleLogout = async () => {
+    dispatch(await logOut());
+  };
+
   return (
     <View>
       <Text style={SettingsScreenStile.screenTitle}>
@@ -101,6 +106,12 @@ const UserSettingsScreen = () => {
             style={SettingsScreenStile.avatar}
           />
         </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={handleLogout}
+        style={SettingsScreenStile.logoutButton}
+      >
+        <AntDesign name="logout" size={24} color="black" />
       </TouchableOpacity>
       <Text style={SettingsScreenStile.inputFormTitle}>
         <FormattedMessage id="name" />

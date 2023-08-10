@@ -117,4 +117,9 @@ export const SettingsScreenStile = StyleSheet.create({
     width: 150,
     height: 100,
   },
+  logoutButton: {
+    position: "absolute",
+    right: 25,
+    top: 200,
+  },
 });

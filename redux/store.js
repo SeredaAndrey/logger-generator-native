@@ -18,16 +18,18 @@ import { settingsReducer } from "./settings/settingsSlice";
 const authPersistConfig = {
   key: "auth",
   storage: AsyncStorage,
-  whitelist: ["token"],
+  // whitelist: ["auth.token"],
 };
 
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
 });
 
+const persistedReducer = persistReducer(authPersistConfig, rootReducer);
+
 export const store = configureStore({
   reducer: {
-    auth: persistReducer(authPersistConfig, rootReducer),
+    auth: persistedReducer,
     settings: settingsReducer,
     cycle: cycleReducer,
   },

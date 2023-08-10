@@ -31,7 +31,7 @@ const initialState = {
   isGeneralSettingPreset: false,
 };
 
-const settingsSlice = createSlice({
+export const settingsSlice = createSlice({
   name: "settings",
   initialState,
   extraReducers: (builder) => {
