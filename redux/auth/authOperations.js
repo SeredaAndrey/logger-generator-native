@@ -1,5 +1,6 @@
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -74,8 +75,11 @@ export const logOut = createAsyncThunk("auth/logout", async () => {
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
-    const persistedToken = thunkAPI.getState().auth.auth.token;
-    // console.log("state: ", persistedToken);
+    const persistedToken = thunkAPI.getState().auth.token;
+    console.log("thunkAPI: ", thunkAPI.getState().auth);
+
+    // const state = await AsyncStorage.getItem("auth");
+    // console.log("persistedToken: ", persistedToken);
     if (persistedToken === null || !persistedToken) {
       return thunkAPI.rejectWithValue();
     }

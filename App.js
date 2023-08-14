@@ -87,6 +87,7 @@ function App() {
         return LOCALES.ENGLISH;
     }
   };
+  console.log("store: ", store.getState());
 
   return (
     <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
