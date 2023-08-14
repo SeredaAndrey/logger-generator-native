@@ -51,18 +51,17 @@ const TotalSettingsForm = () => {
     <View>
       <Text style={SettingsScreenStile.screenTitle}>
         <FormattedMessage id="global_settings" />
-        {/* {generalSettings.priceOfOil} {generalSettings.priceOfElectrical}{" "}
-        {generalSettings.priceOfGasoline} */}
       </Text>
 
       <Text style={SettingsScreenStile.inputFormTitle}>
         <FormattedMessage id="price_oil" />
       </Text>
+
       <TextInput
+        value={`${generalSettings.priceOfOil}`}
         style={SettingsScreenStile.textInput}
         placeholder={"example: 255"}
         placeholderTextColor={"#BDBDBD"}
-        value={generalSettings.priceOfOil}
         onChangeText={(value) =>
           setGeneralSettings({ ...generalSettings, priceOfOil: value })
         }
@@ -75,7 +74,7 @@ const TotalSettingsForm = () => {
         style={SettingsScreenStile.textInput}
         placeholder={"example: 48"}
         placeholderTextColor={"#BDBDBD"}
-        value={generalSettings.priceOfGasoline}
+        value={`${generalSettings.priceOfGasoline}`}
         onChangeText={(value) =>
           setGeneralSettings({ ...generalSettings, priceOfGasoline: value })
         }
@@ -88,7 +87,7 @@ const TotalSettingsForm = () => {
         style={SettingsScreenStile.textInput}
         placeholder={"example: 2.5"}
         placeholderTextColor={"#BDBDBD"}
-        value={generalSettings.priceOfElectrical}
+        value={`${generalSettings.priceOfElectrical}`}
         onChangeText={(value) =>
           setGeneralSettings({ ...generalSettings, priceOfElectrical: value })
         }

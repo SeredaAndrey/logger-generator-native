@@ -1,4 +1,4 @@
-import { FlatList, Text, View, TouchableOpacity } from "react-native";
+import { FlatList, Text, View, TouchableOpacity, Button } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -15,6 +15,8 @@ import { ReportScreenStile } from "./reportScreenStyled";
 import { ScrollView } from "react-native";
 
 const Report = ({ navigation }) => {
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
   const refreshing = useSelector(getCycleRefreshing);
   const [isVisibleDatePickerStart, setIsVisibleDatePickerStart] =
     useState(false);
@@ -71,42 +73,55 @@ const Report = ({ navigation }) => {
     });
     return `${formattedDate} ${formattedTime}`;
   };
-
-  const onConfirmDateStart = (date) => {
-    console.log("date: ", date);
+  const showDatePickerStart = () => {
+    setIsVisibleDatePickerStart(true);
+  };
+  const hideDatePickerStart = () => {
+    setIsVisibleDatePickerStart(false);
+  };
+  const handleConfirmStart = (date) => {
     setFiltering({
       ...filtering,
       dateStart: date,
     });
+    hideDatePickerStart();
   };
-
-  const onConfirmDateStop = (date) => {
-    console.log("date: ", date);
+  const showDatePickerStop = () => {
+    setIsVisibleDatePickerStop(true);
+  };
+  const hideDatePickerStop = () => {
+    setIsVisibleDatePickerStop(false);
+  };
+  const handleConfirmStop = (date) => {
     setFiltering({
       ...filtering,
       dateStop: date,
     });
+    hideDatePickerStop();
   };
-
   return (
     <View>
       <AppBar />
+      <DateTimePickerModal
+        isVisible={isVisibleDatePickerStart}
+        mode="date"
+        onConfirm={handleConfirmStart}
+        onCancel={hideDatePickerStart}
+      />
+      <DateTimePickerModal
+        isVisible={isVisibleDatePickerStop}
+        mode="date"
+        onConfirm={handleConfirmStop}
+        onCancel={hideDatePickerStop}
+      />
+
       <View style={ReportScreenStile.filterContainer}>
         <View style={ReportScreenStile.filterSemiContainer}>
           <Text style={ReportScreenStile.filterTitleText}>
             <FormattedMessage id="show_from" />
           </Text>
-          <DateTimePickerModal
-            inVisible={isVisibleDatePickerStart}
-            mode="date"
-            onConfirm={onConfirmDateStart}
-            onCancel={() => setIsVisibleDatePickerStart(false)}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setIsVisibleDatePickerStart(true);
-            }}
-          >
+
+          <TouchableOpacity onPress={showDatePickerStart}>
             <Text style={ReportScreenStile.filterText}>
               {formatedDate(filtering.dateStart)}
             </Text>
@@ -116,23 +131,15 @@ const Report = ({ navigation }) => {
           <Text style={ReportScreenStile.filterTitleText}>
             <FormattedMessage id="show_to" />
           </Text>
-          <DateTimePickerModal
-            inVisible={isVisibleDatePickerStop}
-            mode="date"
-            onConfirm={onConfirmDateStop}
-            onCancel={() => setIsVisibleDatePickerStop(false)}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              setIsVisibleDatePickerStop(true);
-            }}
-          >
+
+          <TouchableOpacity onPress={showDatePickerStop}>
             <Text style={ReportScreenStile.filterText}>
               {formatedDate(filtering.dateStop)}
             </Text>
           </TouchableOpacity>
         </View>
       </View>
+
       <ScrollView style={{ flexGrow: 1 }}>
         {cycles && (
           <FlatList
