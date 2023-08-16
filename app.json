@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "logger-generator-native",
+    "name": "powergen-tracker",
     "slug": "logger-generator-native",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,10 +19,24 @@
       "adaptiveIcon": {
         "foregroundImage": "./pictures/logo-transparent.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.andriisereda.loggergeneratornative"
     },
     "web": {
       "favicon": "./pictures/logo-generators.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4d633d17-9a64-48ce-9d35-c5485e1776ab"
+      }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+        }
+      ]
+    ]
   }
 }

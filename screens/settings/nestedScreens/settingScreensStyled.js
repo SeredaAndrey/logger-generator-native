@@ -98,6 +98,8 @@ export const SettingsScreenStile = StyleSheet.create({
     flex: 1,
   },
   camera: {
+    // flex: 1,
+
     marginHorizontal: 20,
     height: 500,
     justifyContent: "center",
@@ -112,14 +114,34 @@ export const SettingsScreenStile = StyleSheet.create({
   },
   takePhotoContainer: {
     position: "absolute",
-    top: 0,
+    bottom: 0,
     left: 0,
-    width: 150,
-    height: 100,
+    width: 100,
+    height: 150,
+    borderBottomWidth: 1,
+    zIndex: 1,
   },
   logoutButton: {
     position: "absolute",
     right: 25,
     top: 200,
+  },
+  sendButton: {
+    marginTop: 32,
+    marginHorizontal: 16,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: "#FF6C00",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  sendButtonUnactive: {
+    marginTop: 32,
+    marginHorizontal: 16,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: "#F6F6F6",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

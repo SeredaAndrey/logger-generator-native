@@ -1,6 +1,6 @@
 import axios from "axios";
 import Toast from "react-native-toast-message";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -76,10 +76,7 @@ export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
     const persistedToken = thunkAPI.getState().auth.token;
-    console.log("thunkAPI: ", thunkAPI.getState().auth);
 
-    // const state = await AsyncStorage.getItem("auth");
-    // console.log("persistedToken: ", persistedToken);
     if (persistedToken === null || !persistedToken) {
       return thunkAPI.rejectWithValue();
     }
@@ -114,6 +111,17 @@ export const updateUserData = createAsyncThunk(
         text1: "error",
       });
       return rejectWithValue(error.message);
+    }
+  }
+);
+export const updateUserAvatar = createAsyncThunk(
+  "user/updateAvatar",
+  async (credential, thunkAPI) => {
+    try {
+      const { data } = await axios.patch("api/owner/patchName", credential);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

@@ -1,25 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 import { Text, View, Image, TouchableOpacity } from "react-native";
-import { Camera } from "expo-camera";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Camera, CameraType } from "expo-camera";
+import { Octicons, Feather } from "@expo/vector-icons";
+import * as MediaLibrary from "expo-media-library";
 
 import { SettingsScreenStile } from "./settingScreensStyled";
+import { FormattedMessage } from "react-intl";
+import { updateUserAvatar } from "../../../redux/auth/authOperations";
 
 const GetPhoto = () => {
-  const [camera, setCamera] = useState(null);
+  const [type, setType] = useState(CameraType.back);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
   const [state, setState] = useState([]);
-  const [photo, setPhoto] = useState(null);
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
+
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
+  const toggleCameraType = () => {
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
+  };
   const takePhoto = async () => {
-    const { uri } = await camera.takePictureAsync();
-    setState((prevState) => ({ ...prevState, photo: uri }));
-    setPhoto(uri);
+    const photoSnap = await cameraRef.takePictureAsync();
+    setState((prevState) => ({ ...prevState, photo: photoSnap.uri }));
+  };
+
+  const sendPhoto = async () => {
+    if (state.photo) {
+      dispatch(await updateUserAvatar(state.photo));
+      navigation.navigate("UserSettings");
+      setState([]);
+    }
   };
 
   return (
     <View style={SettingsScreenStile.getPhotoContainer}>
-      <Text>Get Photo</Text>
-      <Camera ref={setCamera} style={SettingsScreenStile.camera}>
+      {/* <Text>{state}</Text> */}
+      <Camera style={SettingsScreenStile.camera} type={type} ref={setCameraRef}>
         {state.photo && (
           <Image
             style={SettingsScreenStile.takePhotoContainer}
@@ -28,11 +64,37 @@ const GetPhoto = () => {
         )}
         <TouchableOpacity
           style={SettingsScreenStile.cameraButtonContainer}
+          onPress={toggleCameraType}
+        >
+          <Feather name="refresh-ccw" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={SettingsScreenStile.cameraButtonContainer}
           onPress={takePhoto}
         >
-          <MaterialIcons name="photo-camera" size={24} color="black" />
+          <Octicons name="circle" size={32} color="black" />
         </TouchableOpacity>
       </Camera>
+      {state.photo ? (
+        <TouchableOpacity
+          onPress={sendPhoto}
+          style={SettingsScreenStile.sendButton}
+          activeOpacity={0.8}
+        >
+          <Text style={SettingsScreenStile.sendButtonText}>
+            <FormattedMessage id="submit" />
+          </Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={SettingsScreenStile.sendButtonUnactive}
+          activeOpacity={0.8}
+        >
+          <Text style={SettingsScreenStile.sendButtonTextUnactive}>
+            <FormattedMessage id="submit" />
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
