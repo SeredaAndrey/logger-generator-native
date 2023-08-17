@@ -1,5 +1,6 @@
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import ImagePicker from "react-native-image-picker";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -116,12 +117,22 @@ export const updateUserData = createAsyncThunk(
 );
 export const updateUserAvatar = createAsyncThunk(
   "user/updateAvatar",
-  async (credential, thunkAPI) => {
+  async (file, { rejectWithValue }) => {
+    const formData = new FormData();
+    formData.append("avatar", {
+      uri: file,
+      type: "image/jpeg",
+      name: "avatar.jpg",
+    });
     try {
-      const { data } = await axios.patch("api/owner/patchName", credential);
+      const { data } = await axios.patch("api/owner/patchAvatar", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return rejectWithValue(error.message);
     }
   }
 );

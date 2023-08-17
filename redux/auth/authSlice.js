@@ -4,6 +4,7 @@ import {
   logOut,
   refreshUser,
   register,
+  updateUserAvatar,
   updateUserData,
   verification,
 } from "./authOperations";
@@ -136,7 +137,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(updateUserData.fulfilled, (state, action) => {
-        console.log("action: ", action);
         state.name = action.payload.data.firstName;
         state.email = action.payload.data.email;
         state.inerfaceLanguage = action.payload.data.inerfaceLanguage;
@@ -147,17 +147,18 @@ export const authSlice = createSlice({
       })
       .addCase(updateUserData.rejected, (state, action) => {
         state.isLoading = false;
+      })
+      .addCase(updateUserAvatar.fulfilled, (state, action) => {
+        console.log("action: ", action);
+        state.avatar = action.payload.avatarURL;
+        state.isLoading = false;
+      })
+      .addCase(updateUserAvatar.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUserAvatar.rejected, (state, action) => {
+        state.isLoading = false;
       });
-    //   .addCase(uploadAvatar.fulfilled, (state, action) => {
-    //     state.avatar = action.payload.avatarURL;
-    //     state.isLoading = false;
-    //   })
-    //   .addCase(uploadAvatar.pending, (state, action) => {
-    //     state.isLoading = true;
-    //   })
-    //   .addCase(uploadAvatar.rejected, (state, action) => {
-    //     state.isLoading = false;
-    //   });
   },
 });
 

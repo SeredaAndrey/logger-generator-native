@@ -46,7 +46,7 @@ const GetPhoto = () => {
 
   const sendPhoto = async () => {
     if (state.photo) {
-      dispatch(await updateUserAvatar(state.photo));
+      dispatch(updateUserAvatar(state.photo));
       navigation.navigate("UserSettings");
       setState([]);
     }
@@ -78,10 +78,10 @@ const GetPhoto = () => {
       {state.photo ? (
         <TouchableOpacity
           onPress={sendPhoto}
-          style={SettingsScreenStile.sendButton}
+          style={SettingsScreenStile.button}
           activeOpacity={0.8}
         >
-          <Text style={SettingsScreenStile.sendButtonText}>
+          <Text style={SettingsScreenStile.buttonTitle}>
             <FormattedMessage id="submit" />
           </Text>
         </TouchableOpacity>
@@ -90,7 +90,7 @@ const GetPhoto = () => {
           style={SettingsScreenStile.sendButtonUnactive}
           activeOpacity={0.8}
         >
-          <Text style={SettingsScreenStile.sendButtonTextUnactive}>
+          <Text style={SettingsScreenStile.buttonTitleUnactive}>
             <FormattedMessage id="submit" />
           </Text>
         </TouchableOpacity>

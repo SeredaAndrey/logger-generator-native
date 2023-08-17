@@ -93,6 +93,21 @@ export const SettingsScreenStile = StyleSheet.create({
     textAlign: "center",
     fontFamily: "JuraReg",
   },
+  sendButtonUnactive: {
+    marginTop: 6,
+    marginHorizontal: 60,
+    height: 50,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F6F6F6",
+  },
+  buttonTitleUnactive: {
+    color: "#aaaaaa",
+    fontSize: 20,
+    textAlign: "center",
+    fontFamily: "JuraReg",
+  },
 
   getPhotoContainer: {
     flex: 1,
@@ -125,23 +140,5 @@ export const SettingsScreenStile = StyleSheet.create({
     position: "absolute",
     right: 25,
     top: 200,
-  },
-  sendButton: {
-    marginTop: 32,
-    marginHorizontal: 16,
-    height: 50,
-    borderRadius: 50,
-    backgroundColor: "#FF6C00",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  sendButtonUnactive: {
-    marginTop: 32,
-    marginHorizontal: 16,
-    height: 50,
-    borderRadius: 50,
-    backgroundColor: "#F6F6F6",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
